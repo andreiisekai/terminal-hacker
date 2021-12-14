@@ -97,11 +97,59 @@ public class Hacker : MonoBehaviour
     {
         if (input == password)
         {
-            Terminal.WriteLine("You are correct! Yay!");
+            DisplayWinScreen();
         }
         else
         {
             Terminal.WriteLine("Waa waa waa, Wrong answer. Try again!");
+        }
+    }
+    void DisplayWinScreen()
+    {
+        currentScreen = Screen.Win;
+        Terminal.ClearScreen();
+        ShowLevelReward();
+    }
+
+    void ShowLevelReward()
+    {
+        switch (level)
+        {
+            case 1:
+                Terminal.WriteLine("Pretty good !");
+                Terminal.WriteLine(@"	
+         .-.
+        (. .)__,')
+        / V      )
+  ()    \  (   \/
+<)-`\()  `._`._ \
+  <).>=====<<==`'====
+   C-'`(>    
+"
+                );
+                break;
+            case 2:
+                Terminal.WriteLine("Have a cup of coffee !");
+                Terminal.WriteLine(@"
+          oOOOOOo
+         ,|    oO
+        //|     |
+        \\|     |
+          `-----`
+"
+                );
+                break;
+            case 3:
+                Terminal.WriteLine("Here is a diamond for you !");
+                Terminal.WriteLine(@"
+        _______
+      .'_/_|_\_'.
+      \`\  |  /`/
+       `\\ | //'
+         `\|/`
+"
+                );
+                break;
         }
     }
 }
