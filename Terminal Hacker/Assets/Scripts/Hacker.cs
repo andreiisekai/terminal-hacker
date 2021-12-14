@@ -3,6 +3,7 @@ using UnityEngine;
 public class Hacker : MonoBehaviour
 {
     // Game configuration data
+    const string menuHint = "You may type menu at any time.";
     string[] level1Passwords = { "onion", "sheep", "tractor", "plow", "corn", "pasture" };
     string[] level2Passwords = { "brick", "concrete", "asphalt", "excavator", "bulldozer", "hammer" };
     string[] level3Passwords = { "hereditary", "ecosystem", "prokariot", "bacteria", "molecule", "nucleus" };
@@ -59,7 +60,7 @@ public class Hacker : MonoBehaviour
         if (isValidLevelNumber)
         {
             level = int.Parse(input);
-            StartGame();
+            AskForPassword();
         }
         else  if (input == "GREYGOO")  // easter egg
         {
@@ -68,14 +69,21 @@ public class Hacker : MonoBehaviour
         else
         {
             Terminal.WriteLine("Please select a valid level");
+            Terminal.WriteLine(menuHint);
         }
     }
 
-    void StartGame()
+    void AskForPassword()
     {
         currentScreen = Screen.Password;
         Terminal.ClearScreen();
-        switch(level)
+        SetRandomPassword();
+        Terminal.WriteLine("Enter your password, hint: " + password.Anagram());
+    }
+
+    void SetRandomPassword()
+    {
+        switch (level)
         {
             case 1:
                 password = level1Passwords[Random.Range(0, level1Passwords.Length)];
@@ -90,7 +98,6 @@ public class Hacker : MonoBehaviour
                 Debug.LogError("Invalid level number");
                 break;
         }
-        Terminal.WriteLine("Please enter your password: ");
     }
 
     void CheckPassword(string input)
@@ -101,8 +108,9 @@ public class Hacker : MonoBehaviour
         }
         else
         {
-            Terminal.WriteLine("Waa waa waa, Wrong answer. Try again!");
+            AskForPassword();
         }
+        Terminal.WriteLine(menuHint);
     }
     void DisplayWinScreen()
     {
